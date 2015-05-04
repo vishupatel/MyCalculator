@@ -97,8 +97,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     txtCalcView.setText(buttonPressed);
                 }
 
-                MiddleOfTyping = true;
+
             }
+            MiddleOfTyping = true;
 
         } else if(buttonPressed.equalsIgnoreCase("DEL")) {
 

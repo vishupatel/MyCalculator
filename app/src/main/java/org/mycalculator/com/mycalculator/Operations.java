@@ -4,9 +4,9 @@ package org.mycalculator.com.mycalculator;
  * Created by vishakha14 on 5/2/2015.
  */
 public class Operations {
-    private double Operater;
-    private double Value2;
-    private String Operatoration;
+    private double mOperand;
+    private double mWaitingOperand;
+    private String mWaitingOperator;
 
     // operator types
     public static final String ADD = "+";
@@ -18,51 +18,51 @@ public class Operations {
 
     // constructor
     public Operations() {
-        Operater = 0;
-        Value2 = 0;
-        Operatoration = "";
+        mOperand = 0;
+        mWaitingOperand = 0;
+        mWaitingOperator = "";
 
     }
 
-    public void setOperand(double Operater) {
-        Operater = Operater;
+    public void setOperand(double operand) {
+        mOperand = operand;
     }
 
     public double getResult() {
-        return Operater;
+        return mOperand;
     }
 
     public String toString() {
-        return Double.toString(Operater);
+        return Double.toString(mOperand);
     }
 
     protected double Operation(String operator) {
 
         if (operator.equals(CLEAR)) {
-            Operater = 0;
-            Operatoration = "";
-            Value2 = 0;
+            mOperand = 0;
+            mWaitingOperator = "";
+            mWaitingOperand = 0;
 
         } else {
-            BasicOperation();
-            Operatoration = operator;
-            Value2 = Operater;
+            performWaitingOperation();
+            mWaitingOperator = operator;
+            mWaitingOperand = mOperand;
         }
 
-        return Operater;
+        return mOperand;
     }
 
-    protected void BasicOperation() {
+    protected void performWaitingOperation() {
 
-        if (Operatoration.equals(ADD)) {
-            Operater = Value2 + Operater;
-        } else if (Operatoration.equals(SUBTRACT)) {
-            Operater = Value2 - Operater;
-        } else if (Operatoration.equals(MULTIPLY)) {
-            Operater = Value2 * Operater;
-        } else if (Operatoration.equals(DIVIDE)) {
-            if (Operater != 0) {
-                Operater = Value2 / Operater;
+        if (mWaitingOperator.equals(ADD)) {
+            mOperand = mWaitingOperand + mOperand;
+        } else if (mWaitingOperator.equals(SUBTRACT)) {
+            mOperand = mWaitingOperand - mOperand;
+        } else if (mWaitingOperator.equals(MULTIPLY)) {
+            mOperand = mWaitingOperand * mOperand;
+        } else if (mWaitingOperator.equals(DIVIDE)) {
+            if (mOperand != 0) {
+                mOperand = mWaitingOperand / mOperand;
             }
         }
 
