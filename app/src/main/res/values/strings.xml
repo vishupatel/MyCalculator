@@ -51,8 +51,8 @@
     <string name="buttonPercentage">%</string>
     <string name="buttonExclamation">!</string>
 
-    <string name="btnAdvance">Advance</string>
-    <string name="btnBasic">Basic</string>
+    <string name="btnAdvance">Go To Advance View</string>
+    <string name="btnBasic">Go To Basic View</string>
     <string name="buttonDel">Del</string>
 
 

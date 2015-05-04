@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    private TextView mCalculatorDisplay;
-    private Boolean userIsInTheMiddleOfTypingANumber = false;
-    private CalculatorClass mCalculatorClass;
+    private TextView txtCalcView;
+    private Boolean MiddleOfTyping = false;
+    private Operations ObjOperator;
     private static final String DIGITS = "0123456789.";
     private Button Advance;
     Context context;
@@ -26,27 +26,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCalculatorClass = new CalculatorClass();
-        mCalculatorDisplay = (TextView) findViewById(R.id.textView1);
+        ObjOperator = new Operations();
+        txtCalcView = (TextView) findViewById(R.id.textView1);
 
         Intent intent = getIntent();
         String txtBoxValue = intent.getStringExtra("txtBoxValue");
-        mCalculatorDisplay = (TextView) findViewById(R.id.textView1);
+        txtCalcView = (TextView) findViewById(R.id.textView1);
 
         if(txtBoxValue == "" || txtBoxValue == "0"){
-            mCalculatorDisplay.setText("0");
+            txtCalcView.setText("0");
         }else{
-            mCalculatorDisplay.setText(txtBoxValue);
-            userIsInTheMiddleOfTypingANumber = true;
+            txtCalcView.setText(txtBoxValue);
+            MiddleOfTyping = true;
         }
 
         Advance = (Button) findViewById(R.id.buttonAdvance);
         Advance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  txtBoxValue =  mCalculatorDisplay.getText().toString();
+                String  txtBoxValue =  txtCalcView.getText().toString();
                 Intent intent;
-                intent = new Intent(MainActivity.this, AdvanceView.class);
+                intent = new Intent(MainActivity.this, AdvanceCalc.class);
                 intent.putExtra("txtBoxValue", txtBoxValue);
                 startActivity(intent);
 
@@ -81,43 +81,43 @@ public class MainActivity extends Activity implements View.OnClickListener {
         String buttonPressed = ((Button) v).getText().toString();
 
         if (DIGITS.contains(buttonPressed)) {
-            if (userIsInTheMiddleOfTypingANumber) {
+            if (MiddleOfTyping) {
 
-                if (buttonPressed.equals(".") && mCalculatorDisplay.getText().toString().contains(".")) {
+                if (buttonPressed.equals(".") && txtCalcView.getText().toString().contains(".")) {
 
                 } else {
-                    mCalculatorDisplay.append(buttonPressed);
+                    txtCalcView.append(buttonPressed);
                 }
 
             } else {
 
                 if (buttonPressed.equals(".")) {
-                    mCalculatorDisplay.setText(0 + buttonPressed);
+                    txtCalcView.setText(0 + buttonPressed);
                 } else {
-                    mCalculatorDisplay.setText(buttonPressed);
+                    txtCalcView.setText(buttonPressed);
                 }
 
-                userIsInTheMiddleOfTypingANumber = true;
+                MiddleOfTyping = true;
             }
 
         } else if(buttonPressed.equalsIgnoreCase("DEL")) {
 
-            if(mCalculatorDisplay.getText().length() <=1) {
-                userIsInTheMiddleOfTypingANumber = false;
-                mCalculatorDisplay.setText("0");
+            if(txtCalcView.getText().length() <=1) {
+                MiddleOfTyping = false;
+                txtCalcView.setText("0");
             }else {
-                userIsInTheMiddleOfTypingANumber = false;
-                String str = mCalculatorDisplay.getText().toString();
-                mCalculatorDisplay.setText(str.substring(0, str.length() -1));
+                MiddleOfTyping = false;
+                String str = txtCalcView.getText().toString();
+                txtCalcView.setText(str.substring(0, str.length() -1));
             }
         }else{
-                if (userIsInTheMiddleOfTypingANumber) {
-                    mCalculatorClass.setOperand(Double.parseDouble(mCalculatorDisplay.getText().toString()));
-                    userIsInTheMiddleOfTypingANumber = false;
+                if (MiddleOfTyping) {
+                    ObjOperator.setOperand(Double.parseDouble(txtCalcView.getText().toString()));
+                    MiddleOfTyping = false;
                 }
-                mCalculatorClass.performOperation(buttonPressed);
-            mCalculatorDisplay.setText(mCalculatorClass.getResult() + "");
-            }
+            ObjOperator.Operation(buttonPressed);
+            txtCalcView.setText(ObjOperator.getResult() + "");
+        }
 
     }
 
@@ -126,13 +126,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble("OPERAND", mCalculatorClass.getResult());
+        outState.putDouble("OPERAND", ObjOperator.getResult());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mCalculatorClass.setOperand(savedInstanceState.getDouble("OPERAND"));
-        mCalculatorDisplay.setText(mCalculatorClass.getResult() + "");
+        ObjOperator.setOperand(savedInstanceState.getDouble("OPERAND"));
+        txtCalcView.setText(ObjOperator.getResult() + "");
     }
 }

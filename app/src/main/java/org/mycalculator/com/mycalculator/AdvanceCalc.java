@@ -5,15 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 /**
  * Created by vishakha14 on 5/2/2015.
  */
-public class AdvanceView extends Activity {
+public class AdvanceCalc extends Activity {
     private TextView mCalculatorDisplay;
     String fieldValue;
 
@@ -22,10 +20,9 @@ public class AdvanceView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.advanceview);
+        setContentView(R.layout.advance_calc);
 
 
 
@@ -44,7 +41,7 @@ public class AdvanceView extends Activity {
             @Override
             public void onClick(View v) {
                 String txtBoxValue = (String) mCalculatorDisplay.getText();
-                Intent intent = new Intent(AdvanceView.this, MainActivity.class);
+                Intent intent = new Intent(AdvanceCalc.this, MainActivity.class);
                 intent.putExtra("txtBoxValue", txtBoxValue);
                 startActivity(intent);
             }

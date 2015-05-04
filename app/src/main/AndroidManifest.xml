@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdvanceView" android:noHistory="true"></activity>
+        <activity android:name=".AdvanceCalc" android:noHistory="true"></activity>
         
     </application>
 
